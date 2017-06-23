@@ -1,11 +1,13 @@
 {
     "name": "grazetech/sacs-php",
-    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3",
+        "symfony/dotenv": "^3.3"
+    },
     "authors": [
         {
             "name": "cyrrill",
             "email": "cyrrill@users.noreply.github.com"
         }
-    ],
-    "require": {}
+    ]
 }
