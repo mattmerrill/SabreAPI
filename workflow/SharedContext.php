@@ -1,10 +1,10 @@
 <?php
 class SharedContext {
 
-    private $results;
+    private $results = array();
     
-    public function SharedContext() {
-        $this->results["SECURITY"] = null;
+    public function __construct() {
+        $this->results['SECURITY'] = null;
     }
     
     public function addResult($key, $result) {
