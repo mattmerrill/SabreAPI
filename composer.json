@@ -1,0 +1,11 @@
+{
+    "name": "grazetech/sacs-php",
+    "type": "library",
+    "authors": [
+        {
+            "name": "cyrrill",
+            "email": "cyrrill@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
