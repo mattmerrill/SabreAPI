@@ -1,12 +1,11 @@
 <?php
-
 namespace GrazeTech\SACSphp\Rest;
 
 use GrazeTech\SACSphp\Rest\TokenHolder;
 use GrazeTech\SACSphp\Configuration\SACSConfig;
 
-class RestClient {
-
+class RestClient
+{
     /**
      *
      * @var SACSConfig
@@ -52,7 +51,7 @@ class RestClient {
     private function buildHeaders()
     {
         return [
-            'Authorization: Bearer '.TokenHolder::getToken()->access_token,
+            'Authorization: Bearer ' . TokenHolder::getToken()->access_token,
             'Accept: */*'
         ];
     }
@@ -72,19 +71,19 @@ class RestClient {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $headers = $this->buildHeaders();
-        switch ($callType) {
-        case GET:
-            $url = $path;
-            if ($request != null) {
-                $url = $this->config->getRestProperty("environment").$path.'?'.http_build_query($request);
-            }
-            curl_setopt($ch, CURLOPT_URL, $url);
-            break;
-        case POST:
-            curl_setopt($ch, CURLOPT_URL, $this->config->getRestProperty("environment").$path);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-            array_push($headers, 'Content-Type: application/json');
-            break;
+        switch ($callType){
+            case GET:
+                $url = $path;
+                if ($request != null) {
+                    $url = $this->config->getRestProperty("environment") . $path . '?' . http_build_query($request);
+                }
+                curl_setopt($ch, CURLOPT_URL, $url);
+                break;
+            case POST:
+                curl_setopt($ch, CURLOPT_URL, $this->config->getRestProperty("environment") . $path);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+                array_push($headers, 'Content-Type: application/json');
+                break;
         }
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         return $ch;

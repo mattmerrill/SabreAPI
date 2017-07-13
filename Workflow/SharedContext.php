@@ -1,9 +1,8 @@
 <?php
-
 namespace GrazeTech\SACSphp\Workflow;
 
-class SharedContext {
-
+class SharedContext
+{
     /**
      *
      * @var array
@@ -25,7 +24,7 @@ class SharedContext {
      */
     public function addResult(string $key, $result)
     {
-        $this->results[$key] =  $result;
+        $this->results[$key] = $result;
     }
 
     /**

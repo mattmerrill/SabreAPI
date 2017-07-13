@@ -1,5 +1,4 @@
 <?php
-
 namespace GrazeTech\SACSphp\Soap;
 
 use GrazeTech\SACSphp\Soap\XMLSerializer;
@@ -10,8 +9,8 @@ use GrazeTech\SACSphp\Configuration\SACSConfig;
 use GrazeTech\SACSphp\Soap\SessionCreateRequest;
 use GrazeTech\SACSphp\Soap\IgnoreTransactionRequest;
 
-class SACSSoapClient {
-
+class SACSSoapClient
+{
     /**
      *
      * @var bool
@@ -85,13 +84,15 @@ class SACSSoapClient {
         return XMLSerializer::generateValidXmlFromArray($security);
     }
 
-    public static function createMessageHeader($actionString) {
+    public static function createMessageHeader($actionString)
+    {
         $messageHeaderXml = SACSSoapClient::getMessageHeaderXml($actionString);
         $soapVar = new SoapVar($messageHeaderXml, XSD_ANYXML, null, null, null);
         return new SoapHeader("http://www.ebxml.org/namespaces/messageHeader", "MessageHeader", $soapVar, 1);
     }
 
-    private static function getMessageHeaderXml($actionString) {
+    private static function getMessageHeaderXml($actionString)
+    {
         $messageHeader = array("MessageHeader" => array(
                 "_namespace" => "http://www.ebxml.org/namespaces/messageHeader",
                 "From" => array("PartyId" => "sample.url.of.sabre.client.com"),
@@ -110,28 +111,30 @@ class SACSSoapClient {
         return XMLSerializer::generateValidXmlFromArray($messageHeader);
     }
 
-    public function setLastInFlow($lastInFlow) {
+    public function setLastInFlow($lastInFlow)
+    {
         $this->lastInFlow = $lastInFlow;
     }
-
 }
 
-class SACSClient {
+class SACSClient
+{
 
-    function doCall($headersXml, $body, $action) {
+    function doCall($headersXml, $body, $action)
+    {
         //Data, connection, auth
         $config = SACSConfig::getInstance();
         $soapUrl = $config->getSoapProperty("environment");
 
         // xml post structure
         $xml_post_string = '<SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">'
-                . '<SOAP-ENV:Header>'
-                . $headersXml
-                . '</SOAP-ENV:Header>'
-                . '<SOAP-ENV:Body>'
-                . $body
-                . '</SOAP-ENV:Body>'
-                . '</SOAP-ENV:Envelope>';
+            . '<SOAP-ENV:Header>'
+            . $headersXml
+            . '</SOAP-ENV:Header>'
+            . '<SOAP-ENV:Body>'
+            . $body
+            . '</SOAP-ENV:Body>'
+            . '</SOAP-ENV:Envelope>';
 
         $headers = array(
             "Content-type: text/xml;charset=\"utf-8\"",
@@ -163,5 +166,4 @@ class SACSClient {
         curl_close($ch);
         return $response;
     }
-
 }
