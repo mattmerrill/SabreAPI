@@ -1,14 +1,14 @@
 <?php
-namespace GrazeTech\SACSphp\Rest;
+namespace GrazeTech\SabreAPI\Rest;
 
-use GrazeTech\SACSphp\Rest\TokenHolder;
-use GrazeTech\SACSphp\Configuration\SACSConfig;
+use GrazeTech\SabreAPI\Rest\TokenHolder;
+use GrazeTech\SabreAPI\Configuration\SabreConfig;
 
 class RestClient
 {
     /**
      *
-     * @var SACSConfig
+     * @var SabreConfig
      */
     private $config;
 
@@ -17,7 +17,7 @@ class RestClient
      */
     public function __construct()
     {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
 
     /**

@@ -1,14 +1,14 @@
 <?php
-namespace GrazeTech\SACSphp\Soap;
+namespace GrazeTech\SabreAPI\Soap;
 
-use GrazeTech\SACSphp\Soap\SACSSoapClient;
-use GrazeTech\SACSphp\Configuration\SACSConfig;
+use GrazeTech\SabreAPI\Soap\SabreSoapClient;
+use GrazeTech\SabreAPI\Configuration\SabreConfig;
 
 class IgnoreTransactionRequest
 {
     /**
      *
-     * @var SACSConfig
+     * @var SabreConfig
      */
     private $config;
 
@@ -17,7 +17,7 @@ class IgnoreTransactionRequest
      */
     public function __construct()
     {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
 
     /**
@@ -38,7 +38,7 @@ class IgnoreTransactionRequest
         try {
             $client->__soapCall(
                 'IgnoreTransactionRQ', $this->createRequestBody(), null, [
-                SACSSoapClient::createMessageHeader('IgnoreTransactionLLSRQ'),
+                SabreSoapClient::createMessageHeader('IgnoreTransactionLLSRQ'),
                 $this->createSecurityHeader($security)
                 ]
             );
@@ -50,7 +50,7 @@ class IgnoreTransactionRequest
     /**
      *
      * @param object $security
-     * @return \GrazeTech\SACSphp\Soap\SoapHeader
+     * @return \GrazeTech\SabreAPI\Soap\SoapHeader
      */
     private function createSecurityHeader($security)
     {

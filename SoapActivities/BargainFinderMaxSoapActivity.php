@@ -1,6 +1,6 @@
 <?php
 include_once 'workflow/Activity.php';
-include_once 'soap/SACSSoapClient.php';
+include_once 'soap/SabreSoapClient.php';
 include_once 'soap_activities/PassengerDetailsNameOnlyActivity.php';
 include_once 'soap/XMLSerializer.php';
 
@@ -9,11 +9,11 @@ class BargainFinderMaxSoapActivity implements Activity {
     private $config;
     
     public function __construct() {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
     
     public function run(&$sharedContext) {
-        $soapClient = new SACSSoapClient("BargainFinderMaxRQ");
+        $soapClient = new SabreSoapClient("BargainFinderMaxRQ");
         $soapClient->setLastInFlow(false);
         $xmlRequest = $this->getRequest();
         $sharedContext->addResult("BargainFinderMaxRQ", $xmlRequest);

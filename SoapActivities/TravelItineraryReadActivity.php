@@ -5,11 +5,11 @@ class TravelItineraryReadActivity implements Activity {
     private $config;
     
     public function __construct() {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
 
     public function run(&$sharedContext) {
-        $soapClient = new SACSSoapClient("TravelItineraryReadRQ");
+        $soapClient = new SabreSoapClient("TravelItineraryReadRQ");
         $soapClient->setLastInFlow(true);
         $doc = new DOMDocument();
         $doc->loadXML($sharedContext->getResult("PassengerDetailsRS"));

@@ -1,15 +1,15 @@
 <?php
-namespace GrazeTech\SACSphp\Soap;
+namespace GrazeTech\SabreAPI\Soap;
 
-use GrazeTech\SACSphp\Soap\XMLSerializer;
-use GrazeTech\SACSphp\Soap\SACSSoapClient;
-use GrazeTech\SACSphp\Workflow\SharedContext;
-use GrazeTech\SACSphp\Soap\SessionCloseRequest;
-use GrazeTech\SACSphp\Configuration\SACSConfig;
-use GrazeTech\SACSphp\Soap\SessionCreateRequest;
-use GrazeTech\SACSphp\Soap\IgnoreTransactionRequest;
+use GrazeTech\SabreAPI\Soap\XMLSerializer;
+use GrazeTech\SabreAPI\Soap\SabreSoapClient;
+use GrazeTech\SabreAPI\Workflow\SharedContext;
+use GrazeTech\SabreAPI\Soap\SessionCloseRequest;
+use GrazeTech\SabreAPI\Configuration\SabreConfig;
+use GrazeTech\SabreAPI\Soap\SessionCreateRequest;
+use GrazeTech\SabreAPI\Soap\IgnoreTransactionRequest;
 
-class SACSSoapClient
+class SabreSoapClient
 {
     /**
      *
@@ -45,8 +45,8 @@ class SACSSoapClient
             $securityCall = new SessionCreateRequest();
             $sharedContext->addResult("SECURITY", $securityCall->executeRequest());
         }
-        $sacsClient = new SACSClient();
-        $result = $sacsClient->doCall(SACSSoapClient::getMessageHeaderXml($this->actionName) . $this->createSecurityHeader($sharedContext), $request, $this->actionName);
+        $SabreClient = new SabreClient();
+        $result = $SabreClient->doCall(SabreSoapClient::getMessageHeaderXml($this->actionName) . $this->createSecurityHeader($sharedContext), $request, $this->actionName);
         if ($this->lastInFlow) {
             error_log("Ignore and close");
             $this->ignoreAndCloseSession($sharedContext->getResult("SECURITY"));
@@ -86,7 +86,7 @@ class SACSSoapClient
 
     public static function createMessageHeader($actionString)
     {
-        $messageHeaderXml = SACSSoapClient::getMessageHeaderXml($actionString);
+        $messageHeaderXml = SabreSoapClient::getMessageHeaderXml($actionString);
         $soapVar = new SoapVar($messageHeaderXml, XSD_ANYXML, null, null, null);
         return new SoapHeader("http://www.ebxml.org/namespaces/messageHeader", "MessageHeader", $soapVar, 1);
     }
@@ -117,13 +117,13 @@ class SACSSoapClient
     }
 }
 
-class SACSClient
+class SabreClient
 {
 
     function doCall($headersXml, $body, $action)
     {
         //Data, connection, auth
-        $config = SACSConfig::getInstance();
+        $config = SabreConfig::getInstance();
         $soapUrl = $config->getSoapProperty("environment");
 
         // xml post structure

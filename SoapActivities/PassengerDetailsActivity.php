@@ -1,6 +1,6 @@
 <?php
 
-include_once 'soap/SACSSoapClient.php';
+include_once 'soap/SabreSoapClient.php';
 include_once 'soap_activities/TravelItineraryReadActivity.php';
 
 class PassengerDetailsActivity implements Activity {
@@ -8,11 +8,11 @@ class PassengerDetailsActivity implements Activity {
     private $config;
     
     public function __construct() {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
 
     public function run(&$sharedContext) {
-        $soapClient = new SACSSoapClient("PassengerDetailsRQ");
+        $soapClient = new SabreSoapClient("PassengerDetailsRQ");
         $soapClient->setLastInFlow(false);
         $xmlRequest = $this->getRequest();
         $sharedContext->addResult("PassengerDetailsRQ", $xmlRequest);
@@ -36,7 +36,7 @@ class PassengerDetailsActivity implements Activity {
                             "_attributes" => array("Ind" => "true")
                         ),
                         "Source" => array(
-                            "_attributes" => array("ReceivedFrom" => "SACSTesting")
+                            "_attributes" => array("ReceivedFrom" => "SabreTesting")
                         )
                     )
                 ),

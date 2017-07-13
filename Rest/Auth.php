@@ -1,13 +1,13 @@
 <?php
-namespace GrazeTech\SACSphp\Rest;
+namespace GrazeTech\SabreAPI\Rest;
 
-use GrazeTech\SACSphp\Configuration\SACSConfig;
+use GrazeTech\SabreAPI\Configuration\SabreConfig;
 
 class Auth
 {
     /**
      *
-     * @var SACSConfig
+     * @var SabreConfig
      */
     private $config;
 
@@ -16,7 +16,7 @@ class Auth
      */
     public function __construct()
     {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
 
     /**

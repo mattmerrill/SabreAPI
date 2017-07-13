@@ -1,9 +1,9 @@
 <?php
-namespace GrazeTech\SACSphp\RestActivities;
+namespace GrazeTech\SabreAPI\RestActivities;
 
-use GrazeTech\SACSphp\Rest\RestClient;
-use GrazeTech\SACSphp\Workflow\Activity;
-use GrazeTech\SACSphp\RestActivities\InstaFlightActivity;
+use GrazeTech\SabreAPI\Rest\RestClient;
+use GrazeTech\SabreAPI\Workflow\Activity;
+use GrazeTech\SabreAPI\RestActivities\InstaFlightActivity;
 
 class LeadPriceCalendarActivity implements Activity
 {

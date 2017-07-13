@@ -1,7 +1,7 @@
 <?php
-namespace GrazeTech\SACSphp\Rest;
+namespace GrazeTech\SabreAPI\Rest;
 
-use GrazeTech\SACSphp\Rest\Auth;
+use GrazeTech\SabreAPI\Rest\Auth;
 
 class TokenHolder
 {

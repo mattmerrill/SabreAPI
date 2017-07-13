@@ -1,6 +1,6 @@
 <?php
-include_once 'configuration/SACSConfig.php';
-include_once 'soap/SACSSoapClient.php';
+include_once 'configuration/SabreConfig.php';
+include_once 'soap/SabreSoapClient.php';
 
 class SessionCloseRequest
 {
@@ -8,7 +8,7 @@ class SessionCloseRequest
 
     public function __construct()
     {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
 
     public function executeRequest($security)
@@ -19,7 +19,7 @@ class SessionCloseRequest
             "trace" => true,
             'cache_wsdl' => WSDL_CACHE_NONE));
         try {
-            $result = $client->__soapCall("SessionCloseRQ", $this->createRequestBody(), null, array(SACSSoapClient::createMessageHeader("SessionCloseRQ"),
+            $result = $client->__soapCall("SessionCloseRQ", $this->createRequestBody(), null, array(SabreSoapClient::createMessageHeader("SessionCloseRQ"),
                 $this->createSecurityHeader($security)));
         } catch (SoapFault $e) {
             var_dump($e);

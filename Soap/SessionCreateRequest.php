@@ -1,6 +1,6 @@
 <?php
-include_once 'configuration/SACSConfig.php';
-include_once 'soap/SACSSoapClient.php';
+include_once 'configuration/SabreConfig.php';
+include_once 'soap/SabreSoapClient.php';
 
 class SessionCreateRequest
 {
@@ -8,7 +8,7 @@ class SessionCreateRequest
 
     public function __construct()
     {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
 
     public function executeRequest()
@@ -20,7 +20,7 @@ class SessionCreateRequest
             'cache_wsdl' => WSDL_CACHE_NONE));
         $responseHeaders = NULL;
         try {
-            $client->__soapCall("SessionCreateRQ", $this->createRequestBody(), null, array(SACSSoapClient::createMessageHeader("SessionCreateRQ"),
+            $client->__soapCall("SessionCreateRQ", $this->createRequestBody(), null, array(SabreSoapClient::createMessageHeader("SessionCreateRQ"),
                 $this->createSecurityHeader()), $responseHeaders);
         } catch (SoapFault $e) {
             var_dump($e);

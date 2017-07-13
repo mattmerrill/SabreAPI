@@ -1,6 +1,6 @@
 <?php
 include_once 'workflow/Activity.php';
-include_once 'soap/SACSSoapClient.php';
+include_once 'soap/SabreSoapClient.php';
 include_once 'soap_activities/PassengerDetailsActivity.php';
 
 class EnhancedAirBookActivity implements Activity {
@@ -8,11 +8,11 @@ class EnhancedAirBookActivity implements Activity {
     private $config;
     
     public function __construct() {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
 
     public function run(&$sharedContext) {
-        $soapClient = new SACSSoapClient("EnhancedAirBookRQ");
+        $soapClient = new SabreSoapClient("EnhancedAirBookRQ");
         $soapClient->setLastInFlow(false);
 
         $bfmResult = $sharedContext->getResult("BargainFinderMaxRS");

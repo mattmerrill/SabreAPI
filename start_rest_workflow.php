@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
-use GrazeTech\SACSphp\Workflow\Workflow;
-use GrazeTech\SACSphp\RestActivities\LeadPriceCalendarActivity;
+use GrazeTech\SabreAPI\Workflow\Workflow;
+use GrazeTech\SabreAPI\RestActivities\LeadPriceCalendarActivity;
 
 define("GET", "GET");
 define("POST", "POST");

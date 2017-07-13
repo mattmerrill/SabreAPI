@@ -1,7 +1,7 @@
 <?php
-namespace GrazeTech\SACSphp\Configuration;
+namespace GrazeTech\SabreAPI\Configuration;
 
-class SACSConfig
+class SabreConfig
 {
     /**
      *
@@ -17,7 +17,7 @@ class SACSConfig
 
     /**
      *
-     * @var SACSConfig
+     * @var SabreConfig
      */
     private static $instance = null;
 
@@ -26,17 +26,17 @@ class SACSConfig
      */
     public function __construct()
     {
-        $this->restConfig = parse_ini_file("SACSRestConfig.ini");
-        $this->soapConfig = parse_ini_file("SACSSoapConfig.ini");
+        $this->restConfig = parse_ini_file("SabreRestConfig.ini");
+        $this->soapConfig = parse_ini_file("SabreSoapConfig.ini");
     }
 
     /**
      *
-     * @return SACSConfig
+     * @return SabreConfig
      */
     public static function getInstance()
     {
-        return (SACSConfig::$instance === null) ? (SACSConfig::$instance = new SACSConfig) : SACSConfig::$instance;
+        return (SabreConfig::$instance === null) ? (SabreConfig::$instance = new SabreConfig) : SabreConfig::$instance;
     }
 
     /**

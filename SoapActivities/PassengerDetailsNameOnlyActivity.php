@@ -1,6 +1,6 @@
 <?php
 include_once 'workflow/Activity.php';
-include_once 'soap/SACSSoapClient.php';
+include_once 'soap/SabreSoapClient.php';
 include_once 'soap_activities/EnhancedAirBookActivity.php';
 
 class PassengerDetailsNameOnlyActivity implements Activity {
@@ -8,11 +8,11 @@ class PassengerDetailsNameOnlyActivity implements Activity {
     private $config;
     
     public function __construct() {
-        $this->config = SACSConfig::getInstance();
+        $this->config = SabreConfig::getInstance();
     }
 
     public function run(&$sharedContext) {
-        $soapClient = new SACSSoapClient("PassengerDetailsRQ");
+        $soapClient = new SabreSoapClient("PassengerDetailsRQ");
         $soapClient->setLastInFlow(false);
         $xmlRequest = $this->getRequest();
         $sharedContext->addResult("PassengerDetailsNameOnlyRQ", $xmlRequest);
@@ -38,7 +38,7 @@ class PassengerDetailsNameOnlyActivity implements Activity {
                         "Email" => array("_attributes" => array("Address" => "webservices.support@sabre.com", "NameNumber" => "1.1")),
                         "PersonName" => array(
                             "_attributes" => array("NameNumber" => "1.1"),
-                            "GivenName" => "SACS".$this->generatePseudoRandomString(5),
+                            "GivenName" => "Sabre".$this->generatePseudoRandomString(5),
                             "Surname" => "TEST".$this->generatePseudoRandomString(5)
                         )
                     )
