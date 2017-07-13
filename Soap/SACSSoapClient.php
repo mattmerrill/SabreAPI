@@ -1,22 +1,46 @@
 <?php
 
-include_once 'workflow/SharedContext.php';
-include_once 'configuration/SACSConfig.php';
-include_once 'soap/SessionCreateRequest.php';
-include_once 'soap/SessionCloseRequest.php';
-include_once 'soap/IgnoreTransactionRequest.php';
-include_once 'soap/XMLSerializer.php';
+namespace GrazeTech\SACSphp\Soap;
+
+use GrazeTech\SACSphp\Soap\XMLSerializer;
+use GrazeTech\SACSphp\Soap\SACSSoapClient;
+use GrazeTech\SACSphp\Workflow\SharedContext;
+use GrazeTech\SACSphp\Soap\SessionCloseRequest;
+use GrazeTech\SACSphp\Configuration\SACSConfig;
+use GrazeTech\SACSphp\Soap\SessionCreateRequest;
+use GrazeTech\SACSphp\Soap\IgnoreTransactionRequest;
 
 class SACSSoapClient {
 
+    /**
+     *
+     * @var bool
+     */
     private $lastInFlow = false;
+
+    /**
+     *
+     * @var string
+     */
     private $actionName;
 
-    public function __construct($actionName) {
+    /**
+     *
+     * @param string $actionName
+     */
+    public function __construct($actionName)
+    {
         $this->actionName = $actionName;
     }
 
-    public function doCall($sharedContext, $request) {
+    /**
+     *
+     * @param SharedContext $sharedContext
+     * @param string $request
+     * @return string
+     */
+    public function doCall($sharedContext, $request)
+    {
         if ($sharedContext->getResult("SECURITY") == null) {
             error_log("SessionCreate");
             $securityCall = new SessionCreateRequest();
@@ -32,22 +56,32 @@ class SACSSoapClient {
         return $result;
     }
 
-    private function ignoreAndCloseSession($security) {
-        $it = new IgnoreTransactionRequest();
-        $it->executeRequest($security);
-        $sc = new SessionCloseRequest();
-        $sc->executeRequest($security);
+    /**
+     *
+     * @param type $security
+     */
+    private function ignoreAndCloseSession($security)
+    {
+        (new IgnoreTransactionRequest)->executeRequest($security);
+        (new SessionCloseRequest)->executeRequest($security);
     }
 
-    private function createSecurityHeader($sharedContext) {
-        $security = array("Security" => array(
+    /**
+     *
+     * @param type $sharedContext
+     * @return type
+     */
+    private function createSecurityHeader($sharedContext)
+    {
+        $security = [
+            "Security" => [
                 "_namespace" => "http://schemas.xmlsoap.org/ws/2002/12/secext",
-                "BinarySecurityToken" => array(
-                    "_attributes" => array("EncodingType" => "Base64Binary", "valueType" => "String"),
+                "BinarySecurityToken" => [
+                    "_attributes" => ["EncodingType" => "Base64Binary", "valueType" => "String"],
                     "_value" => $sharedContext->getResult("SECURITY")->BinarySecurityToken
-                )
-            )
-        );
+                ]
+            ]
+        ];
         return XMLSerializer::generateValidXmlFromArray($security);
     }
 
@@ -88,7 +122,7 @@ class SACSClient {
         //Data, connection, auth
         $config = SACSConfig::getInstance();
         $soapUrl = $config->getSoapProperty("environment");
-        
+
         // xml post structure
         $xml_post_string = '<SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">'
                 . '<SOAP-ENV:Header>'

@@ -1,5 +1,5 @@
 {
-    "name": "grazetech/sacs-php",
+    "name": "GrazeTech/SACSphp",
     "require": {
         "guzzlehttp/guzzle": "^6.3",
         "symfony/dotenv": "^3.3"
@@ -9,5 +9,10 @@
             "name": "cyrrill",
             "email": "cyrrill@users.noreply.github.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "GrazeTech\\SACSphp\\": "/"
+        }
+    }
 }

@@ -11,22 +11,23 @@ include_once 'soap/XMLSerializer.php';
  *
  * @author SG0946321
  */
-class XMLSerializerTest extends PHPUnit_Framework_TestCase {
-    
-    public function testShouldReturnXmlWithNamespaceAndAttributesFromArray() {
+class XMLSerializerTest extends PHPUnit_Framework_TestCase
+{
+
+    public function testShouldReturnXmlWithNamespaceAndAttributesFromArray()
+    {
         $testArray = array("mom" => array(
-            "_attributes" => array("good" => "true"),
-            "son" => array(
-                "daughter" => array(
-                    "_attributes" => array("sex" => "f"),
-                    "_value" => "Erica"
+                "_attributes" => array("good" => "true"),
+                "son" => array(
+                    "daughter" => array(
+                        "_attributes" => array("sex" => "f"),
+                        "_value" => "Erica"
+                    ),
+                    "grandson" => array(
+                        "_value" => "Eric"
+                    )
                 ),
-                "grandson" => array(
-                    "_value" => "Eric"
-                )
-            ),
-            "_namespace" => "http://heaven.com"
-            
+                "_namespace" => "http://heaven.com"
         ));
         $result = XMLSerializer::generateValidXmlFromArray($testArray);
         echo $result;
@@ -35,5 +36,4 @@ class XMLSerializerTest extends PHPUnit_Framework_TestCase {
         $this->assertNotEquals(0, strpos($result, '>Erica</daughter>'));
         $this->assertNotEquals(0, strpos($result, 'xmlns="http://heaven.com"'));
     }
-    
 }

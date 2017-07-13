@@ -1,32 +1,39 @@
 <?php
+namespace GrazeTech\SACSphp\RestActivities;
 
-include_once 'workflow/Activity.php';
+use GrazeTech\SACSphp\Workflow\Activity;
+use GrazeTech\SACSphp\Rest\RestClient;
 
-class BargainFinderMaxActivity implements Activity {
+class BargainFinderMaxActivity implements Activity
+{
 
-    public function run(&$sharedContext) {
+    public function run($sharedContext)
+    {
+        $call = new RestClient;
 
-        $call = new RestClient();
-        $origin = $sharedContext->getResult("origin");
-        $destination = $sharedContext->getResult("destination");
-        $departureDate = $sharedContext->getResult("departureDate");
+        $origin = $sharedContext->getResult('origin');
+        $destination = $sharedContext->getResult('destination');
+        $departureDate = $sharedContext->getResult('departureDate');
+
         $result = $call->executePostCall("/v1.8.6/shop/flights?mode=live", $this->getRequest($origin, $destination, $departureDate));
         $sharedContext->addResult("BargainFinderMax", $result);
+
         return null;
     }
 
-    private function getRequest($origin, $destination, $departureDate) {
+    private function getRequest($origin, $destination, $departureDate)
+    {
         $request = '{
-            "OTA_AirLowFareSearchRQ": {
+        "OTA_AirLowFareSearchRQ": {
 		"OriginDestinationInformation": [
 			{
-                            "DepartureDateTime": "'.$departureDate.'T00:00:00",
+                            "DepartureDateTime": "' . $departureDate . 'T00:00:00",
                             "DestinationLocation": {
-				"LocationCode": "'.$destination.
-                            '"},
+				"LocationCode": "' . $destination .
+            '"},
                             "OriginLocation": {
-                                "LocationCode": "'.$origin.
-                            '"},
+                                "LocationCode": "' . $origin .
+            '"},
                             "RPH":"1"
 			}
 		],
@@ -66,5 +73,4 @@ class BargainFinderMaxActivity implements Activity {
         }';
         return $request;
     }
-
 }

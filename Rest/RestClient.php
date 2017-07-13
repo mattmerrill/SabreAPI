@@ -1,38 +1,71 @@
 <?php
-include_once 'configuration/SACSConfig.php';
-include_once 'rest/TokenHolder.php';
-define("GET", "GET");
-define("POST", "POST");
-define("PUT", "PUT");
-define("DELETE", "DELETE");
+
+namespace GrazeTech\SACSphp\Rest;
+
+use GrazeTech\SACSphp\Rest\TokenHolder;
+use GrazeTech\SACSphp\Configuration\SACSConfig;
 
 class RestClient {
-    
+
+    /**
+     *
+     * @var SACSConfig
+     */
     private $config;
-    
-    public function __construct() {
+
+    /**
+     *
+     */
+    public function __construct()
+    {
         $this->config = SACSConfig::getInstance();
     }
-    
-    public function executeGetCall($path, $request) {
+
+    /**
+     *
+     * @param string $path
+     * @param mixed $request
+     * @return mixed
+     */
+    public function executeGetCall($path, $request)
+    {
         $result = curl_exec($this->prepareCall(GET, $path, $request));
         return json_decode($result);
     }
-    
-    public function executePostCall($path, $request) {
+
+    /**
+     *
+     * @param string $path
+     * @param mixed $request
+     * @return mixed
+     */
+    public function executePostCall($path, $request)
+    {
         $result = curl_exec($this->prepareCall(POST, $path, $request));
         return json_decode($result);
     }
-    
-    private function buildHeaders() {
-        $headers = array(
+
+    /**
+     *
+     * @return array
+     */
+    private function buildHeaders()
+    {
+        return [
             'Authorization: Bearer '.TokenHolder::getToken()->access_token,
             'Accept: */*'
-        );
-        return $headers;
+        ];
     }
-    
-    private function prepareCall($callType, $path, $request) {
+
+    /**
+     *
+     * @param string $callType
+     * @param string $path
+     * @param mixed $request
+     * @return resource
+     */
+    private function prepareCall($callType, $path, $request)
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $callType);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
